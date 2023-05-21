@@ -13,25 +13,26 @@ if (isset($_POST["register"])) {
 // Check if the passwords match
     if ($password != $confirm_password) {
         $error_message = "Passwords do not match. Please try again.";
-    }
+    } else {
 
 // Hash the password
-    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
 // Prepare the statement
-    $stmt = mysqli_prepare($connect, "INSERT INTO users (username, password) VALUES (?, ?)");
+        $stmt = mysqli_prepare($connect, "INSERT INTO users (username, password) VALUES (?, ?)");
 
 // Bind the variables to the statement
-    mysqli_stmt_bind_param($stmt, "ss", $username, $hashed_password);
+        mysqli_stmt_bind_param($stmt, "ss", $username, $hashed_password);
 
 // Execute the statement
-    if (mysqli_stmt_execute($stmt)) {
-        // Redirect to login page
-        $_SESSION['flash_message'] = "Registration successful! Please login.";
-        header("Location: login.php");
-        exit();
-    } else {
-        echo "<script>alert('Something went wrong. Please try again later');</script>";
+        if (mysqli_stmt_execute($stmt)) {
+            // Redirect to login page
+            $_SESSION['flash_message'] = "Registration successful! Please login.";
+            header("Location: login.php");
+            exit();
+        } else {
+            echo "<script>alert('Something went wrong. Please try again later');</script>";
+        }
     }
 }
 ?>
