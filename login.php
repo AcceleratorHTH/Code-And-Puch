@@ -4,7 +4,7 @@ header('Content_Type:text/html;charset=UTF-8');
 
 if (isset($_SESSION['flash_message'])) {
     echo '<script type="text/javascript">';
-    echo 'alert("' . $_SESSION['flash_message'] . '");';
+    echo 'alert("' . htmlspecialchars($_SESSION['flash_message'], ENT_QUOTES, 'UTF-8') . '");';
     echo '</script>';
     unset($_SESSION['flash_message']);
 }
